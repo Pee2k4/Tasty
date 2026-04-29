@@ -23,7 +23,7 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
-import apiClient from "../api/axiosConfig";
+import apiClient from "../api/axiosConfig.js";
 import { useNavigate } from "react-router-dom";
 import { getImageUrl } from "../utils/imageHelper";
 
