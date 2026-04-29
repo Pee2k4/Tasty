@@ -20,7 +20,7 @@ const voucherRoutes = require('./routes/voucherRoutes');
 const app = express();
 
 // === CẤU HÌNH CORS (QUAN TRỌNG NHẤT) ===
-
+//NHAT
 
 app.use(cors({
     origin: function (origin, callback) {
