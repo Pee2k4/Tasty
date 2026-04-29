@@ -24,8 +24,8 @@ const app = express();
 
 app.use(cors({
     origin: function (origin, callback) {
-        // Cho phép request không có origin (Postman), localhost, và TẤT CẢ các link Vercel
-        if (!origin || origin.includes('localhost') ||origin.includes('tastyfood.fit'))|| origin.includes('vercel.app')) {
+        // Đã xóa dấu ngoặc thừa, các điều kiện nối nhau mượt mà bằng ||
+        if (!origin || origin.includes('localhost') || origin.includes('tastyfood.fit') || origin.includes('vercel.app')) {
             callback(null, true);
         } else {
             callback(new Error('CORS Error: Origin này không được phép truy cập!'));
