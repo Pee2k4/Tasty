@@ -40,7 +40,7 @@ exports.createPaymentUrl = (req, res) => {
 
             if (process.env.NODE_ENV === 'production') {
     
-            returnUrl = 'https://fast-food-tasty.vercel.app/payment-result'; 
+            returnUrl = 'https://www.tastyfood.fit/payment-result'; 
             } else {
             returnUrl = 'http://localhost:5173/payment-result';
 }
