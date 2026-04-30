@@ -100,7 +100,7 @@ exports.createQrPaymentUrl = async (req, res) => {
 
         // Xác định domain Frontend
         const frontendUrl = process.env.NODE_ENV === 'production' 
-            ? 'https://fast-food-tasty.vercel.app' 
+            ? 'https://tastyfood.fit' 
             : 'http://localhost:5173';
 
         // Chuẩn bị dữ liệu theo chuẩn PayOS
