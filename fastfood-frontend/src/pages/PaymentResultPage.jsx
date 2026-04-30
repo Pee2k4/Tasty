@@ -1,14 +1,19 @@
+// src/pages/PaymentResultPage.jsx
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Container, Paper, Typography, Button, Box, CircularProgress, useTheme } from '@mui/material';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { Paper, Typography, Button, Box, CircularProgress, useTheme } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CancelIcon from '@mui/icons-material/Cancel'; // Icon lỗi đẹp hơn
-import apiClient from'../API/axiosConfig';
+import CancelIcon from '@mui/icons-material/Cancel';
+import apiClient from '../API/axiosConfig';
+import { useCart } from '../context/CartContext';
 
 function PaymentResultPage() {
     const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
     const [status, setStatus] = useState('loading'); // loading | success | error
     const theme = useTheme();
+    
+    const { clearCart } = useCart(); // Lấy hàm clearCart từ Context
 
     useEffect(() => {
         const responseCode = searchParams.get('vnp_ResponseCode');
@@ -17,10 +22,10 @@ function PaymentResultPage() {
         if (responseCode === '00') {
             setStatus('success');
             
-            // 1. ĐẶT CỜ HIỆU ĐỂ CART CONTEXT TỰ XÓA GIỎ HÀNG
-            localStorage.setItem('PAYMENT_SUCCESS', 'true');
+            // Xóa giỏ hàng ngay khi thanh toán thành công
+            clearCart();
             
-            // 2. GỌI API CẬP NHẬT DATABASE (Chỉ gọi 1 lần nhờ SessionStorage check)
+            // Gọi API cập nhật trạng thái đơn hàng trong Database
             const hasUpdated = sessionStorage.getItem(`paid_${orderId}`);
             if (orderId && !hasUpdated) {
                 apiClient.put(`/orders/${orderId}/pay`)
@@ -33,11 +38,10 @@ function PaymentResultPage() {
         } else {
             setStatus('error');
         }
-    }, [searchParams]);
+    }, [searchParams, clearCart]);
 
-    // Hàm về trang chủ (Reload để kích hoạt xóa giỏ hàng trong Context)
     const handleGoHome = () => {
-        window.location.href = '/';
+        navigate('/'); // Dùng navigate thay vì window.location.href
     };
 
     return (
@@ -47,7 +51,7 @@ function PaymentResultPage() {
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center',
-                bgcolor: '#f5f5f5', // Nền xám nhẹ cho nổi bật hộp thông báo
+                bgcolor: '#f5f5f5',
                 p: 2
             }}
         >
@@ -152,7 +156,7 @@ function PaymentResultPage() {
                             <Button 
                                 variant="outlined" 
                                 color="error" 
-                                onClick={() => window.location.href = '/checkout'}
+                                onClick={() => navigate('/checkout')}
                             >
                                 Thử lại ngay
                             </Button>
