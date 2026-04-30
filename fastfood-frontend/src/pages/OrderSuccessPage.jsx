@@ -3,10 +3,16 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Paper, Typography, Button, useTheme } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { useCart } from '../context/CartContext';
 
 function OrderSuccessPage() {
     const navigate = useNavigate();
     const theme = useTheme();
+    const { clearCart } = useCart();
+
+ useEffect(() => {
+        clearCart();
+    }, [clearCart]);    
 
     return (
         <Box 
