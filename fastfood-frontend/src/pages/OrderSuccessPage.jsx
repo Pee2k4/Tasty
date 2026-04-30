@@ -1,5 +1,5 @@
 // src/pages/OrderSuccessPage.jsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Paper, Typography, Button, useTheme } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
